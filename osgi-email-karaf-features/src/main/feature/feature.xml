@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features name="osgi-email-${project.version}"
+    xmlns="http://karaf.apache.org/xmlns/features/v1.5.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.5.0 http://karaf.apache.org/xmlns/features/v1.5.0">
+
+    <feature name="osgi-email" version="${project.version}" description="Email services">
+        <feature>http</feature>
+        <feature>spring</feature>
+        <feature>guava-27</feature>
+        <bundle>mvn:com.github.jknack/handlebars/4.2.0</bundle>
+
+        <bundle>mvn:hu.blackbelt/osgi-email-api/${project.version}</bundle>
+        <bundle>mvn:hu.blackbelt/osgi-email-impl/${project.version}</bundle>
+
+        <bundle>mvn:javax.mail/javax.mail-api/1.6.2</bundle>
+        <bundle>mvn:com.github.bbottema/emailaddress-rfc2822/2.2.0</bundle>
+
+        <capability>osgi.service;effective:=active;objectClass=org.springframework.mail.javamail.JavaMailSender</capability>
+
+    </feature>
+
+</features>
