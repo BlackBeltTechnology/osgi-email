@@ -26,7 +26,6 @@ public class KarafTestUtil {
     public static final String BLACKBELT_KARAF_FEATURES = "hu.blackbelt.karaf.features";
     public static final String BLACKBELT = "hu.blackbelt";
     public static final String OSGI_EMAIL_KARAF_FEATURES = "osgi-email-karaf-features";
-    public static final String BLACKBELT_JUDO_FRAMEWORK = "hu.blackbelt.judo.framework";
     public static final String SUBETHAMAIL_FEATURES = "subethamail-features";
 
     public static MavenArtifactUrlReference  karafUrl() {
@@ -59,15 +58,6 @@ public class KarafTestUtil {
         return maven()
                 .groupId(BLACKBELT_KARAF_FEATURES)
                 .artifactId(SUBETHAMAIL_FEATURES)
-                .versionAsInProject()
-                .classifier(FEATURES)
-                .type(XML);
-    }
-
-    public static MavenArtifactUrlReference blackbeltFramework() {
-        return maven()
-                .groupId(BLACKBELT_JUDO_FRAMEWORK)
-                .artifactId(FEATURES)
                 .versionAsInProject()
                 .classifier(FEATURES)
                 .type(XML);

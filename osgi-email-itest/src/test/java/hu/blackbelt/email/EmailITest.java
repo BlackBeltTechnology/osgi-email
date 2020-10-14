@@ -60,12 +60,11 @@ public class EmailITest {
                         "scr"),
 
                 features(blackbeltGoogle()),
-                features(blackbeltFramework(), "judo-framework-smtp"),
                 features(blackbeltSubethamail(), "subethamail"),
 
                 features(osgiEmail(), "osgi-email"),
 
-                editConfigurationFilePut("etc/hu.blackbelt.judo.framework.internal.smtp.impl.LogSmtpServer.cfg",
+                editConfigurationFilePut("etc/hu.blackbelt.email.impl.LogSmtpServer.cfg",
                         "logSmtpServerPort", "10025"),
 
                 editConfigurationFilePut("etc/hu.blackbelt.email.impl.JavaMailSenderActivator.cfg",

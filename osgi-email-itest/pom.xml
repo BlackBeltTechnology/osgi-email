@@ -129,15 +129,6 @@
         </dependency>
 
         <dependency>
-            <groupId>hu.blackbelt.judo.framework</groupId>
-            <artifactId>features</artifactId>
-            <classifier>features</classifier>
-            <type>xml</type>
-            <scope>test</scope>
-            <version>${judo-framework-version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>hu.blackbelt.karaf.features</groupId>
             <artifactId>subethamail-features</artifactId>
             <classifier>features</classifier>

@@ -8,6 +8,7 @@
         <feature>http</feature>
         <feature>spring</feature>
         <feature>guava-27</feature>
+        <feature>subethamail</feature>
         <bundle>mvn:com.github.jknack/handlebars/4.2.0</bundle>
 
         <bundle>mvn:hu.blackbelt/osgi-email-api/${project.version}</bundle>

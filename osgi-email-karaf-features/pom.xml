@@ -175,6 +175,14 @@
                     <scope>runtime</scope>
                     <version>${google-karaf-features-version}</version>
                 </dependency>
+                <dependency>
+                    <groupId>hu.blackbelt.karaf.features</groupId>
+                    <artifactId>subethamail-features</artifactId>
+                    <classifier>features</classifier>
+                    <type>xml</type>
+                    <scope>test</scope>
+                    <version>${subethamail-karaf-features-version}</version>
+                </dependency>
             </dependencies>
         </profile>
     </profiles>

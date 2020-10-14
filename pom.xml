@@ -28,7 +28,6 @@
         <email.version>1.16.18</email.version>
 
         <google-karaf-features-version>1.0.6</google-karaf-features-version>
-        <judo-framework-version>2.0.0.20200708_094205_24fdc8e_develop</judo-framework-version>
         <subethamail-karaf-features-version>1.0.0</subethamail-karaf-features-version>
 
     </properties>
