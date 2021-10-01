@@ -6,27 +6,23 @@ import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.context.FieldValueResolver;
 import com.github.jknack.handlebars.context.JavaBeanValueResolver;
 import com.github.jknack.handlebars.context.MapValueResolver;
-import com.google.common.collect.ImmutableMap;
 import hu.blackbelt.email.api.EmailService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hazlewood.connor.bottema.emailaddress.EmailAddressValidator;
 import org.osgi.service.component.annotations.*;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 import javax.mail.internet.MimeMessage;
-import javax.mail.util.ByteArrayDataSource;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.function.BiConsumer;
+
+import static com.pivovarit.function.ThrowingBiConsumer.sneaky;
 
 
 @Component(immediate = true)
@@ -94,7 +90,7 @@ public class EmailServiceImpl implements EmailService {
             if (attachment) {
                 if (message.getFileAttachments() != null) {
                     message.getFileAttachments().forEach(
-                            unchecked((String name, File file) ->
+                            sneaky((String name, File file) ->
                                     helper.addAttachment(name, new FileSystemResource(file))));
                 }
 
@@ -141,22 +137,5 @@ public class EmailServiceImpl implements EmailService {
         } else {
             return new String[]{};
         }
-    }
-
-    @FunctionalInterface
-    private interface ThrowingBiConsumer<T, K> {
-        void accept(T t, K k) throws Exception;
-    }
-
-    private static <T, K> BiConsumer<T, K> unchecked(
-            ThrowingBiConsumer<T, K> throwingBiConsumer
-    ) {
-        return (i, j) -> {
-            try {
-                throwingBiConsumer.accept(i, j);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        };
     }
 }

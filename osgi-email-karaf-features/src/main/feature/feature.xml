@@ -16,6 +16,7 @@
 
         <bundle>mvn:javax.mail/javax.mail-api/1.6.2</bundle>
         <bundle>mvn:com.github.bbottema/emailaddress-rfc2822/2.2.0</bundle>
+        <bundle>mvn:hu.blackbelt.bundles.throwing-function/com.pivovarit.throwing-function/1.5.1_1</bundle>
 
         <capability>osgi.service;effective:=active;objectClass=org.springframework.mail.javamail.JavaMailSender</capability>
 
