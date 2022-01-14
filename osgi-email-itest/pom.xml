@@ -7,7 +7,7 @@
         <artifactId>osgi-email-parent</artifactId>
         <version>${revision}</version>
     </parent>
-    
+
     <artifactId>osgi-email-itest</artifactId>
     <name>Email services :: Karaf :: ITest</name>
     <description>Email services karaf integration tests</description>
@@ -30,7 +30,6 @@
             <artifactId>handlebars</artifactId>
             <version>4.2.0</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.apache.karaf</groupId>
@@ -56,19 +55,20 @@
             <version>${pax-exam-version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-junit4</artifactId>
             <version>${pax-exam-version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam</artifactId>
             <version>${pax-exam-version}</version>
             <scope>test</scope>
         </dependency>
-
 
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
@@ -90,12 +90,14 @@
             <version>${pax-exam-version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.ops4j.pax.url</groupId>
             <artifactId>pax-url-aether</artifactId>
             <version>2.5.2</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
@@ -186,7 +188,6 @@
             </plugin>
         </plugins>
     </build>
-
     <!--
     <properties>
         <pax-exam-version>5.0.0.M2-SNAPSHOT</pax-exam-version>
