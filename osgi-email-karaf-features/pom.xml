@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -13,6 +14,10 @@
     <name>Email services :: Karaf :: Features</name>
     <description>OSGi Email services karaf features</description>
 
+    <properties>
+        <sign.skip>true</sign.skip>
+    </properties>
+
     <build>
         <resources>
             <resource>
@@ -21,7 +26,7 @@
                 <targetPath>${project.build.directory}/feature</targetPath>
             </resource>
         </resources>
-            
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -35,6 +40,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.karaf.tooling</groupId>
                 <artifactId>karaf-maven-plugin</artifactId>
@@ -44,46 +50,72 @@
                     <aggregateFeatures>true</aggregateFeatures>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>target/feature/feature.xml</file>
+                                    <type>xml</type>
+                                    <classifier>feature</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
         <pluginManagement>
-        	<plugins>
-        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        		<plugin>
-        			<groupId>org.eclipse.m2e</groupId>
-        			<artifactId>lifecycle-mapping</artifactId>
-        			<version>1.0.0</version>
-        			<configuration>
-        				<lifecycleMappingMetadata>
-        					<pluginExecutions>
-        						<pluginExecution>
-        							<pluginExecutionFilter>
-        								<groupId>
-        									org.apache.karaf.tooling
-        								</groupId>
-        								<artifactId>
-        									karaf-maven-plugin
-        								</artifactId>
-        								<versionRange>
-        									[4.2.5,)
-        								</versionRange>
-        								<goals>
-        									<goal>verify</goal>
-        									<goal>
-        										features-generate-descriptor
-        									</goal>
-        								</goals>
-        							</pluginExecutionFilter>
-        							<action>
-        								<ignore></ignore>
-        							</action>
-        						</pluginExecution>
-        					</pluginExecutions>
-        				</lifecycleMappingMetadata>
-        			</configuration>
-        		</plugin>
-        	</plugins>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>
+                                            org.apache.karaf.tooling
+                                        </groupId>
+                                        <artifactId>
+                                            karaf-maven-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [4.2.5,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>verify</goal>
+                                            <goal>
+                                                features-generate-descriptor
+                                            </goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
         </pluginManagement>
     </build>
+
     <profiles>
         <profile>
             <id>verify-feature</id>
@@ -95,6 +127,7 @@
                     <plugin>
                         <groupId>org.apache.karaf.tooling</groupId>
                         <artifactId>karaf-maven-plugin</artifactId>
+                        <version>${karaf-version}</version>
                         <extensions>true</extensions>
                         <configuration>
                             <enableGeneration>true</enableGeneration>
@@ -109,13 +142,26 @@
                                 </goals>
                                 <configuration>
                                     <descriptors>
-                                        <descriptor>mvn:org.apache.karaf.features/framework/${karaf-version}/xml/features</descriptor>
-                                        <descriptor>mvn:org.apache.karaf.features/standard/${karaf-version}/xml/features</descriptor>
-                                        <descriptor>mvn:org.apache.karaf.features/enterprise/${karaf-version}/xml/features</descriptor>
-                                        <descriptor>mvn:org.apache.karaf.features/spring/${karaf-version}/xml/features</descriptor>
-                                        <descriptor>mvn:hu.blackbelt.karaf.features/google-features/${google-karaf-features-version}/xml/features</descriptor>
-                                        <descriptor>mvn:hu.blackbelt.karaf.features/subethamail-features/${subethamail-karaf-features-version}/xml/features</descriptor>
-                                        <descriptor>file:${project.build.directory}/feature/feature-required-capabilities.xml</descriptor>
+                                        <descriptor>
+                                            mvn:org.apache.karaf.features/framework/${karaf-version}/xml/features
+                                        </descriptor>
+                                        <descriptor>
+                                            mvn:org.apache.karaf.features/standard/${karaf-version}/xml/features
+                                        </descriptor>
+                                        <descriptor>
+                                            mvn:org.apache.karaf.features/enterprise/${karaf-version}/xml/features
+                                        </descriptor>
+                                        <descriptor>mvn:org.apache.karaf.features/spring/${karaf-version}/xml/features
+                                        </descriptor>
+                                        <descriptor>
+                                            mvn:hu.blackbelt.karaf.features/google-features/${google-karaf-features-version}/xml/features
+                                        </descriptor>
+                                        <descriptor>
+                                            mvn:hu.blackbelt.karaf.features/subethamail-features/${subethamail-karaf-features-version}/xml/features
+                                        </descriptor>
+                                        <descriptor>
+                                            file:${project.build.directory}/feature/feature-required-capabilities.xml
+                                        </descriptor>
                                         <descriptor>file:${project.build.directory}/feature/feature.xml</descriptor>
                                     </descriptors>
                                     <distribution>org.apache.karaf.features:framework</distribution>
@@ -134,6 +180,7 @@
                     </plugin>
                 </plugins>
             </build>
+
             <dependencies>
                 <dependency>
                     <groupId>org.apache.karaf.features</groupId>
@@ -142,6 +189,7 @@
                     <scope>runtime</scope>
                     <version>${karaf-version}</version>
                 </dependency>
+
                 <dependency>
                     <groupId>org.apache.karaf.features</groupId>
                     <artifactId>standard</artifactId>
@@ -150,6 +198,7 @@
                     <scope>runtime</scope>
                     <version>${karaf-version}</version>
                 </dependency>
+
                 <dependency>
                     <groupId>org.apache.karaf.features</groupId>
                     <artifactId>enterprise</artifactId>
@@ -158,6 +207,7 @@
                     <scope>runtime</scope>
                     <version>${karaf-version}</version>
                 </dependency>
+
                 <dependency>
                     <groupId>org.apache.karaf.features</groupId>
                     <artifactId>spring</artifactId>
@@ -166,6 +216,7 @@
                     <scope>runtime</scope>
                     <version>${karaf-version}</version>
                 </dependency>
+
                 <dependency>
                     <groupId>hu.blackbelt.karaf.features</groupId>
                     <artifactId>google-features</artifactId>
@@ -174,6 +225,7 @@
                     <scope>runtime</scope>
                     <version>${google-karaf-features-version}</version>
                 </dependency>
+
                 <dependency>
                     <groupId>hu.blackbelt.karaf.features</groupId>
                     <artifactId>subethamail-features</artifactId>
