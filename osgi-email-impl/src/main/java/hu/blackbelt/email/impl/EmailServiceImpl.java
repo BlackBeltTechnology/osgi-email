@@ -16,6 +16,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+import javax.mail.Transport;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
@@ -39,74 +40,84 @@ public class EmailServiceImpl implements EmailService {
 
     @SneakyThrows
     public void sendMessage(EmailMessage message) {
-        boolean html = false;
-        if (message.getHtmlTemplate() != null && !"".equals(message.getHtmlTemplate().trim())) {
-            html = true;
-        }
 
-        boolean plain = false;
-        if (message.getPlaintTemplate() != null && !"".equals(message.getPlaintTemplate().trim())) {
-            plain = true;
-        }
+        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+        Thread.currentThread().setContextClassLoader(Transport.class.getClassLoader());
 
-        boolean attachment = false;
-        if (message.getInputStreamAttachments() != null && message.getInputStreamAttachments().size() > 0) {
-            attachment = true;
-        }
-        if (message.getFileAttachments() != null && message.getFileAttachments().size() > 0) {
-            attachment = true;
-        }
-
-        if (!html && !plain) {
-            throw new RuntimeException("No HTML or Plain message defined");
-        }
-
-        if (!html && !attachment) {
-            SimpleMailMessage msg = new SimpleMailMessage();
-            msg.setFrom(message.getFrom());
-            msg.setBcc(listToArray(message.getBccs()));
-            msg.setCc(listToArray(message.getCcs()));
-            msg.setTo(listToArray(message.getTos()));
-            msg.setSubject(message.getSubject());
-            msg.setText(getMessage(message.getPlaintTemplate(), message.getModel()));
-            emailSender.send(msg);
-        } else {
-            MimeMessage msg = emailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
-            helper.setFrom(message.getFrom());
-            helper.setBcc(listToArray(message.getBccs()));
-            helper.setCc(listToArray(message.getCcs()));
-            helper.setTo(listToArray(message.getTos()));
-            helper.setSubject(message.getSubject());
-
-            if (html && !plain) {
-                helper.setText(getMessage(message.getHtmlTemplate(), message.getModel()), true);
-            } else if (html && plain) {
-                helper.setText(getMessage(message.getPlaintTemplate(), message.getModel()),
-                        getMessage(message.getHtmlTemplate(), message.getModel()));
-            } else if (!html && plain) {
-                helper.setText(getMessage(message.getPlaintTemplate(), message.getModel()));
+        try {
+            boolean html = false;
+            if (message.getHtmlTemplate() != null && !"".equals(message.getHtmlTemplate().trim())) {
+                html = true;
             }
-            if (attachment) {
-                if (message.getFileAttachments() != null) {
-                    message.getFileAttachments().forEach(
-                            sneaky((String name, File file) ->
-                                    helper.addAttachment(name, new FileSystemResource(file))));
+
+            boolean plain = false;
+            if (message.getPlaintTemplate() != null && !"".equals(message.getPlaintTemplate().trim())) {
+                plain = true;
+            }
+
+            boolean attachment = false;
+            if (message.getInputStreamAttachments() != null && message.getInputStreamAttachments().size() > 0) {
+                attachment = true;
+            }
+            if (message.getFileAttachments() != null && message.getFileAttachments().size() > 0) {
+                attachment = true;
+            }
+
+            if (!html && !plain) {
+                throw new RuntimeException("No HTML or Plain message defined");
+            }
+
+            if (!html && !attachment) {
+                SimpleMailMessage msg = new SimpleMailMessage();
+                msg.setFrom(message.getFrom());
+                msg.setBcc(listToArray(message.getBccs()));
+                msg.setCc(listToArray(message.getCcs()));
+                msg.setTo(listToArray(message.getTos()));
+                msg.setSubject(message.getSubject());
+                msg.setText(getMessage(message.getPlaintTemplate(), message.getModel()));
+                emailSender.send(msg);
+
+            } else {
+                MimeMessage msg = emailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
+                helper.setFrom(message.getFrom());
+                helper.setBcc(listToArray(message.getBccs()));
+                helper.setCc(listToArray(message.getCcs()));
+                helper.setTo(listToArray(message.getTos()));
+                helper.setSubject(message.getSubject());
+
+                if (html && !plain) {
+                    helper.setText(getMessage(message.getHtmlTemplate(), message.getModel()), true);
+                } else if (html && plain) {
+                    helper.setText(getMessage(message.getPlaintTemplate(), message.getModel()),
+                            getMessage(message.getHtmlTemplate(), message.getModel()));
+                } else if (!html && plain) {
+                    helper.setText(getMessage(message.getPlaintTemplate(), message.getModel()));
                 }
+                if (attachment) {
+                    if (message.getFileAttachments() != null) {
+                        message.getFileAttachments().forEach(
+                                sneaky((String name, File file) ->
+                                        helper.addAttachment(name, new FileSystemResource(file))));
+                    }
 
-                /*
-                if (message.getInputStreamAttachments() != null) {
-                    message.getInputStreamAttachments().forEach(
-                            unchecked((String name, BinaryAttachment binaryAttachment) ->
-                                    helper.addAttachment(name,
-                                            new ByteArrayDataSource(binaryAttachment.getInputStream(),
-                                                    binaryAttachment.getMimeType()))
-                            )
-                    );
-                } */
+                    /*
+                    if (message.getInputStreamAttachments() != null) {
+                        message.getInputStreamAttachments().forEach(
+                                unchecked((String name, BinaryAttachment binaryAttachment) ->
+                                        helper.addAttachment(name,
+                                                new ByteArrayDataSource(binaryAttachment.getInputStream(),
+                                                        binaryAttachment.getMimeType()))
+                                )
+                        );
+                    } */
+                }
+                emailSender.send(msg);
             }
-            emailSender.send(msg);
+        } finally {
+            Thread.currentThread().setContextClassLoader(contextClassLoader);
         }
+
     }
 
     private String getMessage(String template, Object model) throws IOException {
