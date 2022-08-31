@@ -25,11 +25,7 @@ public class JavaMailSenderActivator {
     @Activate
     public void activate(ComponentContext componentContext, JavaMailSenderConfiguration javaMailSenderConfiguration) {
         serviceRegistration = componentContext.getBundleContext()
-                .registerService(JavaMailSender.class, getJavaMailSender(javaMailSenderConfiguration.mail_smtp_host(),
-                        javaMailSenderConfiguration.mail_smtp_port(),
-                        javaMailSenderConfiguration.mail_smtp_user(),
-                        javaMailSenderConfiguration.mail_smtp_password(),
-                        componentContext.getProperties()), new Hashtable<>());
+                .registerService(JavaMailSender.class, getJavaMailSender(componentContext.getProperties()), new Hashtable<>());
     }
 
     @Deactivate
@@ -39,14 +35,8 @@ public class JavaMailSenderActivator {
         }
     }
 
-    public JavaMailSender getJavaMailSender(String host, int port, String user, String password,
-                                            Dictionary<String, Object> serviceParams) {
+    public JavaMailSender getJavaMailSender(Dictionary<String, Object> serviceParams) {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-
-        mailSender.setHost(host);
-        mailSender.setPort(port);
-        mailSender.setUsername(user);
-        mailSender.setPassword(password);
 
         Properties props = mailSender.getJavaMailProperties();
         Enumeration<String> keys = serviceParams.keys();
@@ -57,6 +47,7 @@ public class JavaMailSenderActivator {
                 props.setProperty(key, val.toString());
             }
         }
+
         return mailSender;
     }
 }
