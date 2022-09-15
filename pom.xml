@@ -9,7 +9,7 @@
     <description>Email services</description>
 
     <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
+        <revision>1.0.1-SNAPSHOT</revision>
         <maven>3.8.3</maven>
         <project-shortname>osgi-email</project-shortname>
         <project-repositoryId>BlackBeltTechnology/osgi-email</project-repositoryId>
