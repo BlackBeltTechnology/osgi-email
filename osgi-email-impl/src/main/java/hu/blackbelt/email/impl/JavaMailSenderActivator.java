@@ -1,5 +1,25 @@
 package hu.blackbelt.email.impl;
 
+/*-
+ * #%L
+ * Email services :: Karaf :: Implementation
+ * %%
+ * Copyright (C) 2018 - 2022 BlackBelt Technology
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
 import lombok.extern.slf4j.Slf4j;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
@@ -25,11 +45,7 @@ public class JavaMailSenderActivator {
     @Activate
     public void activate(ComponentContext componentContext, JavaMailSenderConfiguration javaMailSenderConfiguration) {
         serviceRegistration = componentContext.getBundleContext()
-                .registerService(JavaMailSender.class, getJavaMailSender(javaMailSenderConfiguration.mail_smtp_host(),
-                        javaMailSenderConfiguration.mail_smtp_port(),
-                        javaMailSenderConfiguration.mail_smtp_user(),
-                        javaMailSenderConfiguration.mail_smtp_password(),
-                        componentContext.getProperties()), new Hashtable<>());
+                .registerService(JavaMailSender.class, getJavaMailSender(componentContext.getProperties()), new Hashtable<>());
     }
 
     @Deactivate
@@ -39,14 +55,8 @@ public class JavaMailSenderActivator {
         }
     }
 
-    public JavaMailSender getJavaMailSender(String host, int port, String user, String password,
-                                            Dictionary<String, Object> serviceParams) {
+    public JavaMailSender getJavaMailSender(Dictionary<String, Object> serviceParams) {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-
-        mailSender.setHost(host);
-        mailSender.setPort(port);
-        mailSender.setUsername(user);
-        mailSender.setPassword(password);
 
         Properties props = mailSender.getJavaMailProperties();
         Enumeration<String> keys = serviceParams.keys();
@@ -57,6 +67,7 @@ public class JavaMailSenderActivator {
                 props.setProperty(key, val.toString());
             }
         }
+
         return mailSender;
     }
 }

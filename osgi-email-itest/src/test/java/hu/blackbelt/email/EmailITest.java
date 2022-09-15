@@ -1,5 +1,25 @@
 package hu.blackbelt.email;
 
+/*-
+ * #%L
+ * Email services :: Karaf :: ITest
+ * %%
+ * Copyright (C) 2018 - 2022 BlackBelt Technology
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
 import com.google.common.collect.ImmutableMap;
 import hu.blackbelt.email.api.EmailService;
 import org.junit.Assert;
@@ -10,23 +30,19 @@ import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
+import org.ops4j.pax.exam.options.MavenArtifactUrlReference;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.log.LogService;
-import org.osgi.service.metatype.annotations.AttributeDefinition;
-import org.osgi.service.metatype.annotations.AttributeType;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.subethamail.smtp.helper.SimpleMessageListener;
 
 import javax.inject.Inject;
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 
-import static hu.blackbelt.email.KarafTestUtil.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
+import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.ops4j.pax.exam.OptionUtils.combine;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.editConfigurationFilePut;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.features;
@@ -35,7 +51,10 @@ import static hu.blackbelt.email.api.EmailService.BinaryAttachment.binaryAttachm
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
 public class EmailITest {
-
+    public static final String BLACKBELT = "hu.blackbelt";
+    public static final String OSGI_EMAIL_KARAF_FEATURES = "osgi-email-karaf-features";
+    public static final String FEATURES = "features";
+    public static final String XML = "xml";
     @Inject
     LogService log;
 
@@ -51,21 +70,20 @@ public class EmailITest {
     @Inject
     SimpleMessageListener messageListener;
 
+    public static MavenArtifactUrlReference osgiEmail() {
+        return maven()
+                .groupId(BLACKBELT)
+                .artifactId(OSGI_EMAIL_KARAF_FEATURES)
+                .versionAsInProject()
+                .classifier(FEATURES)
+                .type(XML);
+    }
     @Configuration
-    public Option[] config() throws FileNotFoundException {
+    public Option[] config() throws MalformedURLException {
 
-        return combine(karafConfig(this.getClass()),
+        return combine(KarafFeatureProvider.karafConfig(this.getClass()),
 
-                features(karafStandardRepo(),
-                        "scr"),
-
-                features(blackbeltGoogle()),
-                features(blackbeltFramework(), "judo-framework-smtp"),
-                features(blackbeltSubethamail(), "subethamail"),
-
-                features(osgiEmail(), "osgi-email"),
-
-                editConfigurationFilePut("etc/hu.blackbelt.judo.framework.internal.smtp.impl.LogSmtpServer.cfg",
+                editConfigurationFilePut("etc/hu.blackbelt.email.impl.LogSmtpServer.cfg",
                         "logSmtpServerPort", "10025"),
 
                 editConfigurationFilePut("etc/hu.blackbelt.email.impl.JavaMailSenderActivator.cfg",
@@ -77,9 +95,8 @@ public class EmailITest {
                 editConfigurationFilePut("etc/hu.blackbelt.email.impl.JavaMailSenderActivator.cfg",
                         "mail.smtp.port", "10025"),
 
+                features(osgiEmail(), "osgi-email")
 
-        editConfigurationFilePut("etc/org.ops4j.pax.web.cfg",
-                        "org.osgi.service.http.port", "8181")
         );
 
     }

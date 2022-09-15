@@ -5,8 +5,7 @@
     <parent>
         <groupId>hu.blackbelt</groupId>
         <artifactId>osgi-email-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>osgi-email-impl</artifactId>
@@ -16,6 +15,12 @@
     <description>Email services Implementation</description>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.pivovarit</groupId>
+            <artifactId>throwing-function</artifactId>
+            <version>1.5.1</version>
+        </dependency>
 
         <dependency>
             <groupId>hu.blackbelt</groupId>
@@ -67,6 +72,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.subethamail</groupId>
+            <artifactId>subethasmtp</artifactId>
+            <version>3.1.7</version>
+        </dependency>
     </dependencies>
 
     <build>

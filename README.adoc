@@ -1,0 +1,16 @@
+= osgi-email
+
+image::https://github.com/BlackBeltTechnology/osgi-email/actions/workflows/build.yml/badge.svg?branch=develop[link="https://github.com/BlackBeltTechnology/osgi-email/actions/workflows/build.yml" float="center"]
+
+== Introduction
+
+This project contains an OSGi email service with asciidoctor templating capabilities.
+
+== Contributing to the project
+
+Everyone is welcome to contribute to osgi-email! As a starter, please read the corresponding link:CONTRIBUTING.adoc[CONTRIBUTING] guide for details!
+
+
+== License
+
+This project is licensed under the https://www.apache.org/licenses/LICENSE-2.0[Apache License 2.0].
