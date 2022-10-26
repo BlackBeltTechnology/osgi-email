@@ -31,7 +31,7 @@
         <spring.version>5.2.0.RELEASE</spring.version>
         <email.version>1.16.18</email.version>
 
-        <karaf-features-version>2.0.0</karaf-features-version>
+        <karaf-features-version>2.0.1.20220926_213446_a786c6cc_develop</karaf-features-version>
         <sonar-maven-plugin-version>3.7.0.1746</sonar-maven-plugin-version>
 
         <!--suppress UnresolvedMavenProperty -->
@@ -592,7 +592,7 @@
                                         <toc>left</toc>
                                         <icons>font</icons>
                                         <sectanchors>true</sectanchors>
-                                        <idprefix/>
+                                        <idprefix />
                                         <idseparator>-</idseparator>
                                     </attributes>
                                 </configuration>
