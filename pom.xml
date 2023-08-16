@@ -10,7 +10,7 @@
 
     <properties>
         <revision>1.0.1-SNAPSHOT</revision>
-        <maven>3.8.3</maven>
+        <maven>3.9.4</maven>
         <project-shortname>osgi-email</project-shortname>
         <project-repositoryId>BlackBeltTechnology/osgi-email</project-repositoryId>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
