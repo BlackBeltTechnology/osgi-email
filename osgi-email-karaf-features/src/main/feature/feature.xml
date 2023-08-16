@@ -27,7 +27,7 @@
     <feature name="osgi-email" version="${project.version}" description="Email services">
         <feature>http</feature>
         <feature>spring</feature>
-        <feature>guava-27</feature>
+        <feature>guava-30</feature>
         <feature>subethamail</feature>
         <feature dependency="true">scr</feature>
 
