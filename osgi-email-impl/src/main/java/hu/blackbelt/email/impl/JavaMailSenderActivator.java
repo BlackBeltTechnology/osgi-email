@@ -60,6 +60,20 @@ public class JavaMailSenderActivator {
 
         Properties props = mailSender.getJavaMailProperties();
         Enumeration<String> keys = serviceParams.keys();
+
+        if (serviceParams.get("mail.smtp.host") != null || !serviceParams.get("mail.smtp.host").toString().isBlank()) {
+            mailSender.setHost((String) serviceParams.get("mail.smtp.host"));
+        }
+        if (serviceParams.get("mail.smtp.user") != null || !serviceParams.get("mail.smtp.user").toString().isBlank()) {
+            mailSender.setUsername((String) serviceParams.get("mail.smtp.user"));
+        }
+        if (serviceParams.get("mail.smtp.password") != null || !serviceParams.get("mail.smtp.password").toString().isBlank()) {
+            mailSender.setPassword((String) serviceParams.get("mail.smtp.password"));
+        }
+        if (serviceParams.get("mail.smtp.port") != null || !serviceParams.get("mail.smtp.port").toString().isBlank()) {
+            mailSender.setPort(Integer.parseInt((String) serviceParams.get("mail.smtp.port")));
+        }
+
         while (keys.hasMoreElements()) {
             String key = keys.nextElement();
             if (key.startsWith("mail.")) {
@@ -70,4 +84,5 @@ public class JavaMailSenderActivator {
 
         return mailSender;
     }
+
 }
