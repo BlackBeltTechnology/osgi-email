@@ -21,7 +21,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
 
-        <karaf-version>4.4.3</karaf-version>
+        <karaf-version>4.4.5</karaf-version>
 
         <slf4j.version>1.7.32</slf4j.version>
 
@@ -31,7 +31,7 @@
         <spring.version>5.2.0.RELEASE</spring.version>
         <email.version>1.16.18</email.version>
 
-        <karaf-features-version>2.0.2.20230914_091647_cbb59ce0_develop</karaf-features-version>
+        <karaf-features-version>2.0.2.20240410_083849_8b6fbfb2_develop</karaf-features-version>
         <sonar-maven-plugin-version>3.7.0.1746</sonar-maven-plugin-version>
 
         <!--suppress UnresolvedMavenProperty -->
