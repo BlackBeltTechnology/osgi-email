@@ -26,7 +26,7 @@
 
     <repository>mvn:hu.blackbelt.karaf.features/google-features/${karaf-features-version}/xml/features</repository>
     <repository>mvn:hu.blackbelt.karaf.features/subethamail-features/${karaf-features-version}/xml/features</repository>
-
+    <repository>mvn:org.apache.karaf.features/spring-legacy/${karaf-version}/xml/features</repository>
     <feature name="test"  version="1" description="Base test features" install="true">
         <feature prerequisite="true">wrap</feature>
         <feature prerequisite="true">scr</feature>

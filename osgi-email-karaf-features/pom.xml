@@ -151,7 +151,7 @@
                                         <descriptor>
                                             mvn:org.apache.karaf.features/enterprise/${karaf-version}/xml/features
                                         </descriptor>
-                                        <descriptor>mvn:org.apache.karaf.features/spring/${karaf-version}/xml/features
+                                        <descriptor>mvn:org.apache.karaf.features/spring-legacy/${karaf-version}/xml/features
                                         </descriptor>
                                         <descriptor>
                                             mvn:hu.blackbelt.karaf.features/google-features/${karaf-features-version}/xml/features
@@ -210,7 +210,7 @@
 
                 <dependency>
                     <groupId>org.apache.karaf.features</groupId>
-                    <artifactId>spring</artifactId>
+                    <artifactId>spring-legacy</artifactId>
                     <classifier>features</classifier>
                     <type>xml</type>
                     <scope>runtime</scope>
