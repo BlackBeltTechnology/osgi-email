@@ -104,7 +104,7 @@ public class EmailITest {
     @Test
     public void test() throws UnsupportedEncodingException {
         emailService.sendMessage(EmailService.EmailMessage.emailBuilder()
-                        .from("rr@dd.hu")
+                        .from("rr@dd.hu<test>")
                         .to("adfadf@sdasdas.ju")
 //                .htmlTemplate("<b>dasdasd</b><span>asdjasdj {{ test }}asasdasd</span>")
                         .inputStreamAttachment("test.txt",
