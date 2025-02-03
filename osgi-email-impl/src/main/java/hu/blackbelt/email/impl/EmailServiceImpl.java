@@ -36,8 +36,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-import javax.mail.Transport;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
