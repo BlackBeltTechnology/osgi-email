@@ -111,6 +111,10 @@ public class EmailITest {
                                 binaryAttachmentBuilder()
                                         .inputStream(new ByteArrayInputStream("Test".getBytes("UTF-8")))
                                         .mimeType("text/plain").build())
+                        .inputStreamInlinedContent("testinlinedcid",
+                                binaryAttachmentBuilder()
+                                        .inputStream(new ByteArrayInputStream("Test".getBytes("UTF-8")))
+                                        .mimeType("text/plain").build())
                         .plaintTemplate("dasdasd asdjasdj {{ test }}asasdasd")
                         .model(ImmutableMap.of("test", "Ejjj!"))
                         .subject("Tesadvajsd askdh akshdas")
