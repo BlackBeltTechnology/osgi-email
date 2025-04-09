@@ -83,6 +83,12 @@ public class EmailServiceImpl implements EmailService {
             if (message.getFileAttachments() != null && message.getFileAttachments().size() > 0) {
                 attachment = true;
             }
+            if (message.getFileInlinedContents() != null && message.getFileInlinedContents().size() > 0) {
+                attachment = true;
+            }
+            if (message.getInputStreamInlinedContents() != null && message.getInputStreamInlinedContents().size() > 0) {
+                attachment = true;
+            }
 
             if (!html && !plain) {
                 throw new RuntimeException("No HTML or Plain message defined");
