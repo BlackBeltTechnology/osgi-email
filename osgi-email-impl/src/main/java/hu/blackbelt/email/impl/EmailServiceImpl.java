@@ -38,6 +38,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 import javax.mail.Transport;
 import javax.mail.internet.MimeMessage;
+import javax.mail.util.ByteArrayDataSource;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -120,17 +121,31 @@ public class EmailServiceImpl implements EmailService {
                                 sneaky((String name, File file) ->
                                         helper.addAttachment(name, new FileSystemResource(file))));
                     }
+                    if (message.getFileInlinedContents() != null) {
+                        message.getFileInlinedContents().forEach(
+                                sneaky((String cid, File file) ->
+                                        helper.addInline(cid, new FileSystemResource(file))));
+                    }
 
-                    /*
                     if (message.getInputStreamAttachments() != null) {
                         message.getInputStreamAttachments().forEach(
-                                unchecked((String name, BinaryAttachment binaryAttachment) ->
+                                sneaky((String name, BinaryAttachment binaryAttachment) ->
                                         helper.addAttachment(name,
                                                 new ByteArrayDataSource(binaryAttachment.getInputStream(),
                                                         binaryAttachment.getMimeType()))
                                 )
                         );
-                    } */
+                    }
+                    if (message.getInputStreamInlinedContents() != null) {
+                        message.getInputStreamInlinedContents().forEach(
+                                sneaky((String cid, BinaryAttachment binaryAttachment) ->
+                                        helper.addInline(cid,
+                                                new ByteArrayDataSource(binaryAttachment.getInputStream(),
+                                                        binaryAttachment.getMimeType()))
+                                )
+                        );
+                    }
+
                 }
                 emailSender.send(msg);
             }

@@ -48,7 +48,12 @@ public interface EmailService {
         @Singular
         Map<String, BinaryAttachment> inputStreamAttachments;
         @Singular
+        Map<String, BinaryAttachment> inputStreamInlinedContents;
+        @Singular
         Map<String, File> fileAttachments;
+        @Singular
+        Map<String, File> fileInlinedContents;
+
         String subject;
         String plaintTemplate;
         String htmlTemplate;
