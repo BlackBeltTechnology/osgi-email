@@ -118,8 +118,8 @@ public class EmailITest {
                         .plaintTemplate("dasdasd asdjasdj {{ test }}asasdasd")
                         .model(ImmutableMap.of("test", "Ejjj!"))
                         .subject("Tesadvajsd askdh akshdas")
+                        .replyTo("reply@test.hu")
         );
-
 
         Assert.assertTrue(true);
     }
