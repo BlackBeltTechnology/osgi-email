@@ -77,7 +77,7 @@ public class LogSmtpServer implements SimpleMessageListener {
     public void deliver(String from, String recipient, InputStream data) throws TooMuchDataException, IOException {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(data, StandardCharsets.UTF_8))) {
             final String body = br.lines().collect(Collectors.joining(System.lineSeparator()));
-            log.info("\nFrom: " + from + "\nTo: " + recipient + "Data: \n" + body);
+            log.info("\nFrom: " + from + "\nTo: " + recipient + "\n" + "Data: \n" + body);
         }
     }
 }

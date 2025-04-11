@@ -102,6 +102,9 @@ public class EmailServiceImpl implements EmailService {
                 msg.setTo(listToArray(message.getTos()));
                 msg.setSubject(message.getSubject());
                 msg.setText(getMessage(message.getPlaintTemplate(), message.getModel()));
+                if (message.getReplyTo() != null) {
+                    msg.setReplyTo(message.getReplyTo());
+                }
                 emailSender.send(msg);
 
             } else {
@@ -112,6 +115,9 @@ public class EmailServiceImpl implements EmailService {
                 helper.setCc(listToArray(message.getCcs()));
                 helper.setTo(listToArray(message.getTos()));
                 helper.setSubject(message.getSubject());
+                if (message.getReplyTo() != null) {
+                    helper.setReplyTo(message.getReplyTo());
+                }
 
                 if (html && !plain) {
                     helper.setText(getMessage(message.getHtmlTemplate(), message.getModel()), true);
