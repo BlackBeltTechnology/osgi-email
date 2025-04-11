@@ -41,6 +41,7 @@ public interface EmailService {
         String from;
         @Singular
         Set<String> tos;
+        String replyTo;
         @Singular
         Set<String> bccs;
         @Singular
