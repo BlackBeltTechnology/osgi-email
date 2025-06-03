@@ -28,7 +28,7 @@
         <pax-exam-version>4.13.5</pax-exam-version>
         <log4j.configuration>log4j.properties</log4j.configuration>
 
-        <spring.version>6.2.7</spring.version>
+        <spring.version>5.2.0.RELEASE</spring.version>
         <email.version>1.16.18</email.version>
 
         <karaf-features-version>2.0.2.20250601_200046_ae1bb67d_feature_JNG_6310_UpdateEpsilon</karaf-features-version>
