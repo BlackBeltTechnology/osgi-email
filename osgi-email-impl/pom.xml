@@ -89,7 +89,7 @@
                     <instructions>
                         <Import-Package>
                             !lombok,
-                            org.springframework.*;version="[4,6)",
+                            org.springframework.*;version="[4,7)",
                             *
                         </Import-Package>
                     </instructions>
