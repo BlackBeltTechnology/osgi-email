@@ -31,7 +31,7 @@
         <spring.version>5.2.0.RELEASE</spring.version>
         <email.version>1.16.18</email.version>
 
-        <karaf-features-version>2.0.2.20250620_182944_56271f0a_develop</karaf-features-version>
+        <karaf-features-version>2.0.2.20250806_004748_d0c312c1_develop</karaf-features-version>
         <sonar-maven-plugin-version>3.7.0.1746</sonar-maven-plugin-version>
 
         <!--suppress UnresolvedMavenProperty -->
