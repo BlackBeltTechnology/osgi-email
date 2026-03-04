@@ -22,6 +22,14 @@ Key facts:
 - [osgi-email-karaf-features/src/main/feature/feature.xml](osgi-email-karaf-features/src/main/feature/feature.xml): Karaf feature descriptor declaring the `osgi-email` feature and its dependencies
 - [osgi-email-itest/pom.xml](osgi-email-itest/pom.xml): Pax Exam integration tests running in a real Karaf 4.4.7 container against the embedded SubEthaSMTP server
 
+## Depends on
+
+- [karaf-features](../../packages/karaf-features): packages/karaf-features
+
+## Used by
+
+- [judo-platform](../judo-platform): runtime/judo-platform
+
 ## Optional
 
 - [.github/workflows/build.yml](.github/workflows/build.yml): CI/CD pipeline (GitHub Actions)
