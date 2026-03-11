@@ -1,0 +1,37 @@
+# OSGi Email Service
+
+> An OSGi-based email service for Apache Karaf that provides a clean API for sending templated emails with Handlebars templates, attachments, and inline content, fully configurable via OSGi Config Admin.
+
+Key facts:
+- Java 21 (Zulu JDK), Maven 3.9+ multi-module project (4 modules)
+- OSGi Declarative Services component model with Metatype configuration
+- Spring Mail (JavaMailSender) for SMTP transport, Handlebars for email templating
+- Deploys as Apache Karaf features; integration-tested in a real Karaf container via Pax Exam
+- Apache License 2.0
+
+## Docs
+
+- [README.md](README.md): Project overview with architecture diagrams and module details
+- [AGENTS.md](AGENTS.md): Developer guide with build commands, technology stack, and coding conventions
+- [CONTRIBUTING.md](CONTRIBUTING.md): Development setup and contribution guidelines
+
+## Modules
+
+- [osgi-email-api/pom.xml](osgi-email-api/pom.xml): Service interface (`EmailService`) and builder-pattern DTOs (`EmailMessage`, `BinaryAttachment`) — no external dependencies
+- [osgi-email-impl/pom.xml](osgi-email-impl/pom.xml): Implementation using Spring Mail and Handlebars templating, plus `JavaMailSenderActivator` (SMTP config) and `LogSmtpServer` (embedded test SMTP)
+- [osgi-email-karaf-features/src/main/feature/feature.xml](osgi-email-karaf-features/src/main/feature/feature.xml): Karaf feature descriptor declaring the `osgi-email` feature and its dependencies
+- [osgi-email-itest/pom.xml](osgi-email-itest/pom.xml): Pax Exam integration tests running in a real Karaf 4.4.7 container against the embedded SubEthaSMTP server
+
+## Depends on
+
+- [karaf-features](../../packages/karaf-features): Apache Karaf feature descriptors for 20+ third-party libraries
+
+## Used by
+
+- [judo-platform](../judo-platform): Model-driven OSGi runtime platform with REST APIs and Karaf deployment
+
+## Optional
+
+- [.github/workflows/build.yml](.github/workflows/build.yml): CI/CD pipeline (GitHub Actions)
+- [LICENSE.txt](LICENSE.txt): Apache License 2.0 text
+- [logback-test.xml](logback-test.xml): Test logging configuration
